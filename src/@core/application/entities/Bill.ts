@@ -46,10 +46,10 @@ export default class Bill {
       status: this.status,
       name: this.name,
       createdAt: this.createdAt,
-      modifiedAt: this.modifiedAt,
-      owner: this.owner,
-      discount: this.discount,
-      paidValue: this.paidValue,
+      ...(this.modifiedAt && {modifiedAt: this.modifiedAt?.toISOString()}),
+      ...(this.owner && {owner: this.owner}),
+      ...(this.discount && {discount: this.discount}),
+      ...(this.paidValue && {paidValue: this.paidValue}),
       products: this.products.map(product => product.toJSON()),
     };
   }

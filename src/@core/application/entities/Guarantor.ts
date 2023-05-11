@@ -15,8 +15,8 @@ const GuarantorSchema = z.object({
 export default class Guarantor {
   private id: string;
   private name: string;
-  private credit?: number;
   private createdAt: Date;
+  private credit?: number;
   private modifiedAt?: Date;
   private bills: Bill[];
 
@@ -34,9 +34,9 @@ export default class Guarantor {
     return {
       id: this.id,
       name: this.name,
-      credit: this.credit,
+      ...(this.credit && {credit: this.credit}),
       createdAt: this.createdAt.toISOString(),
-      modifiedAt: this.modifiedAt?.toISOString(),
+      ...(this.modifiedAt && {modifiedAt: this.modifiedAt?.toISOString()}),
       bills: this.bills.map(bill => bill.toJSON()),
     };
   }
