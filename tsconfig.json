@@ -1,9 +1,10 @@
 {
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "lib": ["es6", "DOM"],
-    "types": ["reflect-metadata"],
+    "types": ["reflect-metadata", "@types/styled-components-react-native"],
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
