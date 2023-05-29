@@ -11,10 +11,10 @@ export const Container = styled.View`
 export const Title = styled.Text`
   font-size: 24px;
   line-height: 32px;
-  font-weight: 600;
-  font-family: 'Nunito';
-  color: #313243;
+  font-family: 'Inter-Medium';
+  color: #51525e;
   width: 100%;
   text-align: center;
   margin-bottom: 16px;
+  line-height: 44px;
 `;

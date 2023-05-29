@@ -5,6 +5,7 @@
     "strict": true,
     "lib": ["es6", "DOM"],
     "types": ["reflect-metadata", "@types/styled-components-react-native"],
+    "typeRoots": ["./src/@types"],
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true

@@ -7,12 +7,14 @@ interface InputProps extends TextInputProps {
   controllerProps: Omit<ControllerProps<any>, 'render'>;
   errors?: string;
   label?: string | undefined;
+  inputRef?: React.MutableRefObject<any>;
 }
 
 const Input: React.FC<InputProps> = ({
   controllerProps,
   errors,
   label,
+  inputRef,
   ...rest
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -25,9 +27,10 @@ const Input: React.FC<InputProps> = ({
         defaultValue={controllerProps.defaultValue || ''}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            ref={inputRef}
             isFocused={isFocused}
             isErrored={!!errors}
-            selectionColor={'#3E4BFC'}
+            selectionColor={'#3d3d4b'}
             onFocus={() => setIsFocused(true)}
             className="w-full h-auto py-2 px-4 bg-gray-200 text-lg"
             onBlur={(e: any) => {

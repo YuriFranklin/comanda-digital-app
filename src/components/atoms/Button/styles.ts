@@ -24,8 +24,7 @@ export const Button = styled.TouchableOpacity.attrs({
 export const Text = styled.Text`
   font-size: 18px;
   line-height: 22px;
-  font-family: 'Nunito';
-  font-weight: 700;
+  font-family: 'Inter-SemiBold';
   letter-spacing: 4px;
   color: #ffffff;
   line-height: 28px;
