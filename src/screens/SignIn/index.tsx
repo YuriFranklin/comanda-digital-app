@@ -22,24 +22,22 @@ const SignIn: React.FC = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
-          {!isKeyboardOpen && (
-            <LogoContainer>
-              <Logo
-                height={120}
-                style={{
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: 4,
-                  },
-                  shadowOpacity: 0.3,
-                  shadowRadius: 4.65,
-                  elevation: 8,
-                }}
-              />
-              <Text>ComandaDigital</Text>
-            </LogoContainer>
-          )}
+          <LogoContainer>
+            <Logo
+              height={!isKeyboardOpen ? 120 : 80}
+              style={{
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 4,
+                },
+                shadowOpacity: 0.3,
+                shadowRadius: 4.65,
+                elevation: 8,
+              }}
+            />
+            <Text>ComandaDigital</Text>
+          </LogoContainer>
           <FormContainer>
             <LoginForm />
           </FormContainer>

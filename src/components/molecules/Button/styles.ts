@@ -2,23 +2,22 @@ import styled from 'styled-components/native';
 import {ButtonProps} from 'react-native';
 
 export const Button = styled.TouchableOpacity.attrs({
-  shadowColor: '#000',
+  shadowColor: '#3e4bfc',
   shadowOffset: {
     width: 0,
-    height: 2,
+    height: 0,
   },
-  shadowOpacity: 0.25,
-  shadowRadius: 3.84,
-
-  elevation: 5,
+  shadowOpacity: 0.58,
+  shadowRadius: 10.0,
+  elevation: 30,
 })<ButtonProps>`
-  elevation: 5;
   background: #3e4bfc;
   border-radius: 12px;
   width: 100%;
   padding: 14px 16px 14px 16px;
   justify-items: center;
   align-items: center;
+  height: 56px;
 `;
 
 export const Text = styled.Text`
