@@ -6,6 +6,8 @@ import ProductPresenter from '../presentation/presenters/ProductPresenter';
 import LoginUseCase from '../domain/usecases/LoginUseCase';
 import AuthAdapter from '../infra/auth/firebase/AuthAdapter';
 import AuthController from '../presentation/controllers/AuthController';
+import SubscribeAuthUseCase from '../domain/usecases/SubscribeAuthUseCase';
+import UnsubscribeAuthUseCase from '../domain/usecases/UnsubscribeAuthUseCase';
 
 export const Registry = {
   ProductAdapter: Symbol.for('ProductAdapter'),
@@ -15,6 +17,8 @@ export const Registry = {
   AuthAdapter: Symbol.for('AuthAdapter'),
   AuthController: Symbol.for('AuthController'),
   LoginUseCase: Symbol.for('LoginUseCase'),
+  SubscribeAuthUseCase: Symbol.for('SubscribeAuthUseCase'),
+  UnsubscribeAuthUseCase: Symbol.for('UnsubscribeAuthUseCase'),
 };
 
 export const container = new Container();
@@ -53,7 +57,26 @@ container
   );
 
 container
+  .bind(Registry.SubscribeAuthUseCase)
+  .toDynamicValue(
+    context =>
+      new SubscribeAuthUseCase(context.container.get(Registry.AuthAdapter)),
+  );
+
+container
+  .bind(Registry.UnsubscribeAuthUseCase)
+  .toDynamicValue(
+    context =>
+      new UnsubscribeAuthUseCase(context.container.get(Registry.AuthAdapter)),
+  );
+
+container
   .bind(Registry.AuthController)
   .toDynamicValue(
-    context => new AuthController(context.container.get(Registry.LoginUseCase)),
+    context =>
+      new AuthController(
+        context.container.get(Registry.LoginUseCase),
+        context.container.get(Registry.SubscribeAuthUseCase),
+        context.container.get(Registry.UnsubscribeAuthUseCase),
+      ),
   );

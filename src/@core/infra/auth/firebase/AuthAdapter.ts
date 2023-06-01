@@ -3,13 +3,52 @@ import AuthGateway from '../../../application/contracts/AuthGateway';
 
 export default class AuthAdapter implements AuthGateway {
   private user: FirebaseAuthTypes.User | null = null;
-  private observers: ((val: boolean) => void)[] = [];
+  private observers: (({
+    userName,
+    signed,
+  }: {
+    userName: string | undefined;
+    signed: boolean;
+  }) => void)[] = [];
 
   public constructor() {
     auth().onAuthStateChanged(user => {
       this.user = user;
-      this.observers.forEach(async observer => observer(!!user));
+      this.observers.forEach(async observer =>
+        observer({
+          userName: user?.displayName || undefined,
+          signed: !!user || false,
+        }),
+      );
     });
+  }
+
+  public subscribeAuthenticatedListener(
+    func: ({
+      userName,
+      signed,
+    }: {
+      userName: string | undefined;
+      signed: boolean;
+    }) => void,
+  ): void {
+    this.observers.push(func);
+  }
+
+  public unsubscribeAuthenticatedListener(
+    func: ({
+      userName,
+      signed,
+    }: {
+      userName: string | undefined;
+      signed: boolean;
+    }) => void,
+  ): void {
+    this.observers = this.observers.filter(listener => listener !== func);
+  }
+
+  public getAuthData(): {userName: string | undefined; signed: boolean} {
+    return {userName: this.user?.displayName || undefined, signed: !!this.user};
   }
 
   public async authenticate(userName: string, pass: string): Promise<boolean> {
@@ -24,15 +63,6 @@ export default class AuthAdapter implements AuthGateway {
   public isAuthenticated(): boolean {
     return this.user ? true : false;
   }
-
-  subscribeAuthenticatedListener(func: (val: boolean) => void): void {
-    this.observers.push(func);
-  }
-
-  unsubscribeAuthenticatedListener(func: (val: boolean) => void): void {
-    this.observers = this.observers.filter(listener => listener !== func);
-  }
-
   public async signOut(): Promise<void> {
     this.user && auth().signOut();
   }

@@ -8,8 +8,8 @@ import {Container, Title} from './styles';
 import Input from '../../../molecules/Input';
 import {TextInput} from 'react-native';
 import {Registry, container} from '../../../../@core/infra/Container';
-import LoginUseCase from '../../../../@core/domain/usecases/LoginUseCase';
 import useToast from '../../../../hooks/useToast';
+import AuthController from '../../../../@core/presentation/controllers/AuthController';
 
 const loginSchema = z.object({
   username: z.string().nonempty({message: 'Insira um login válido.'}),
@@ -25,24 +25,24 @@ const LoginForm: React.FC = () => {
     formState: {errors},
   } = useForm<LoginSchemaType>({resolver: zodResolver(loginSchema)});
   const passwordInputRef = useRef<TextInput>(null);
-  const loginUseCase = container.get<LoginUseCase>(Registry.LoginUseCase);
+  const authController = container.get<AuthController>(Registry.AuthController);
   const [isLoading, setIsLoading] = useState(false);
   const {addToast} = useToast();
 
   const onSubmit = async ({username, password}: LoginSchemaType) => {
     try {
       setIsLoading(true);
-      const isSigned = await loginUseCase.execute(username, password);
+      const isSigned = await authController.signIn(username, password);
 
       if (!isSigned) {
         throw 'Error';
       }
     } catch (e) {
       addToast({
-        text: 'Teste',
+        text: 'Não foi possível conectar-se, tente novamente.',
         type: 'error',
         buttonTitle: 'OK',
-        onClick: () => console.log('Test'),
+        onClick: () => console.log('Error when try login.'),
       });
     } finally {
       setIsLoading(false);

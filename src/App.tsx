@@ -1,12 +1,12 @@
 import React from 'react';
 import Routes from './routes';
-import {ToastProvider} from './context/toast';
+import RootProvider from './context';
 
 function App(): JSX.Element {
   return (
-    <ToastProvider>
+    <RootProvider>
       <Routes />
-    </ToastProvider>
+    </RootProvider>
   );
 }
 
