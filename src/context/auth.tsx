@@ -22,7 +22,10 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC<PropsWithChildren> = ({children}) => {
   const [authProps, setAuthProps] = useState(defaultState);
-  const authController = container.get<AuthController>(Registry.AuthController);
+  const authController = useMemo(
+    () => container.get<AuthController>(Registry.AuthController),
+    [],
+  );
 
   const providerValueWrap: AuthContextData = useMemo(
     () => ({isSigned: authProps.isSigned, userName: authProps.userName}),

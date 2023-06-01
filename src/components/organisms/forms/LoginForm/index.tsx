@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import Button from '../../../molecules/Button';
 import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -25,7 +25,10 @@ const LoginForm: React.FC = () => {
     formState: {errors},
   } = useForm<LoginSchemaType>({resolver: zodResolver(loginSchema)});
   const passwordInputRef = useRef<TextInput>(null);
-  const authController = container.get<AuthController>(Registry.AuthController);
+  const authController = useMemo(
+    () => container.get<AuthController>(Registry.AuthController),
+    [],
+  );
   const [isLoading, setIsLoading] = useState(false);
   const {addToast} = useToast();
 
