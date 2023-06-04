@@ -1,14 +1,53 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Bills from '../screens/Bills';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import BottomTab from '../components/organisms/BottomTab';
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const MainRoutes: React.FC = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Bills" component={Bills} />
-    </Stack.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      tabBar={BottomTab}>
+      <Tab.Screen
+        name="bills"
+        component={Bills}
+        options={{
+          title: 'Contas',
+          type: 'add',
+          iconName: 'content-paste',
+          onAdd: () => console.log('a'),
+        }}
+      />
+      <Tab.Screen
+        name="pendencies"
+        component={Bills}
+        options={{
+          title: 'Pendências',
+          type: 'add',
+          iconName: 'payments',
+        }}
+      />
+      <Tab.Screen
+        name="history"
+        component={Bills}
+        options={{
+          title: 'Histórico',
+          iconName: 'description',
+        }}
+      />
+      <Tab.Screen
+        name="more"
+        component={Bills}
+        options={{
+          title: 'Mais',
+          iconName: 'menu',
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 

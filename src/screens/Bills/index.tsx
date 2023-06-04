@@ -6,7 +6,13 @@ import Button from '../../components/molecules/Button';
 
 const Bills: React.FC = () => {
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+        height: '100%',
+        width: '100%',
+        backgroundColor: '#F2F3F7',
+      }}>
       <Text>Lorem Ipsum</Text>
       <Button title="Sit amet" />
     </View>
